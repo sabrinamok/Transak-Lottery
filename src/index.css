@@ -34,11 +34,11 @@ h2 {
     color:#fff;
     text-align: left;
 }
-.what .container {
+.what .container,.winner .container {
   max-width: 1000px;
   margin: auto;
 }
-.what h2 {
+.what h2,.winner h2 {
   margin:0;
 }
 .what h3 {
@@ -137,7 +137,7 @@ h2.page-title {
     color: transparent;
     animation: rainbow_animation 6s ease-in-out infinite;
     background-size: 400% 100%;
-    margin: 0.2em 0;
+    margin: 0.1em 0;
 }
 
 .buy {
@@ -151,6 +151,10 @@ h2.page-title {
   font-size:1.5rem;
   padding:10px 30px;
   color:#fff;
+  text-transform: uppercase;
+  font-weight:800;
+  font-family: 'Nunito', sans-serif;
+  cursor:pointer;
 }
 .buy:hover {
   color:#6659ff;
@@ -165,7 +169,67 @@ h2.page-title {
       background-position: 100% 0;
   }
 }
-
+.winner {
+    background: #ffeced;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 100px 0;
+    text-align: left;
+}
+.winner h2 {
+  color:#8459ff;
+}
+.winner h2.black {
+  color:#000;
+}
+.winner-buy {
+  text-decoration: none;
+  background:#6659ff;
+  border:3px solid #6659ff;
+  border-radius: 50px;
+  font-size:1.5rem;
+  padding:10px 30px;
+  color:#fff;
+  text-transform: uppercase;
+  font-weight:800;
+  font-family: 'Nunito', sans-serif;
+  cursor:pointer;
+  margin-top:20px;
+}
+.winner-buy:hover {
+  color:#6659ff;
+  background:transparent;
+}
+.winner {
+  position: relative;
+}
+.winner .ball {
+  z-index: 1;
+}
+.green.ball {
+  left: -220px;
+    top: 10px;
+    position: absolute;
+}
+.green.ball img {
+  width: 450px;
+}
+.pink.ball {
+  bottom: -170px;
+    right: -150px;
+    position: absolute;
+}
+.pink.ball img {
+  width:459px;
+}
+.winner .description {
+  z-index: 2;
+  position: relative;
+}
 @media screen and (min-width: 1024px){
   /*.what {
       padding-top: 160px;
@@ -195,6 +259,20 @@ h2.page-title {
   .buy:hover {
     color:#fff;
     border:2px solid #fff;
+  }
+  .green.ball {
+    left: -20px;
+    top: 30px;
+  }
+  .green.ball img {
+    width: 250px;
+  }
+  .pink.ball {
+    bottom: -70px;
+    right: -50px;
+  }
+  .winner .ball img{
+    width:150px;
   }
 }
 

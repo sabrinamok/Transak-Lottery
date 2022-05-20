@@ -6,6 +6,7 @@ import lottery from "./lottery";
 import "./index.css";
 import beige from "./img/beige-ball.png";
 import purple from "./img/purple-ball.png";
+import green from "./img/green-ball.png";
 
 function App() {
   const [manager, setManager] = useState("");
@@ -156,9 +157,20 @@ function App() {
           <h1>{message}</h1>
         </div>
       </section>
-      <section class="winner" showWinner={false}>
-        <h4>Ready to pick a winner ?</h4>
-        <button onClick={pickWinner}>Pick a winner</button>
+      <section class="winner section-wrapper" showWinner={false}>
+        <div class="container">
+          <div class="description">
+            <h2>Ready to pick a</h2>
+            <h2 class="black">Winner?</h2>
+            <button class="winner-buy" onClick={pickWinner}>Pick a winner</button>
+            </div>
+          <div class="green ball">
+            <img src={green}/>
+          </div>
+          <div class="pink ball">
+            <img src={beige}/>
+          </div>
+        </div>
       </section>
     </div>
   );
