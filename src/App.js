@@ -60,12 +60,31 @@ function App() {
     });
     setMessage("The Winner has been selected and transferred winnings.");
   };
+  const [show, setShow] = useState(false)
+  
+  if(!web3.isConnected()) {
+
+      // show some dialog to ask the user to start a node
+
+  } else {
+    useEffect(() => {
+      setTimeout(() => setShow(true), 1000);
+    }, []);
+
+  }
+
+  const Button = () => (
+    <>
+    <button href="https://staging-global.transak.com/?apiKey=f9c0675d-eda3-47b7-8a72-f8762f9a5c03&redirectURL=https://abc.com&cryptoCurrencyCode=MATIC&defaultCryptoCurrency=MATIC&cryptoCurrencyList=MATIC&defaultNetwork=polygon&networks=polygon&network=polygon&walletAddress=[userwalletaddress]&disableWalletAddressForm=true&exchangeScreenTitle=LotteryDapp&isFeeCalculationHidden=true&fiatAmount=100">Buy Matic</button>
+    </>
+  )
 
   return (
     <div className="App">
       <h2>Lottery Game</h2>
       <p>Powered By Transak</p>
       <p>This contract is managed by {manager}</p>
+      {show && <Button/> }
       <p>
         There are currently {players} entries competing to win&nbsp;
         {web3.utils.fromWei(balance, "ether")} MATIC
