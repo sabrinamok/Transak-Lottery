@@ -3,6 +3,9 @@ import "./App.css";
 import web3 from "./web3";
 import { useEffect, useState } from "react";
 import lottery from "./lottery";
+import "./index.css";
+import beige from "./img/beige-ball.png";
+import purple from "./img/purple-ball.png";
 
 function App() {
   const [manager, setManager] = useState("");
@@ -60,6 +63,7 @@ function App() {
     });
     setMessage("The Winner has been selected and transferred winnings.");
   };
+  
 /*const [show, setShow] = useState(false)
   
 
@@ -72,6 +76,10 @@ function App() {
       setShow(true);
     }
     });*/
+
+
+    const [show, setShow] = useState(false);
+    const [showWinner, setShowWinner] = useState(false);
     let connectedAccount = 0;
 
     (async () => {
@@ -79,52 +87,79 @@ function App() {
       console.log(accounts[0]);
       connectedAccount = accounts[0];
       if(accounts != "0xa18736ED3c74D61777750399E716644db69F44D8") {
-        console.log('hi');
+        console.log('not manager');
+        setShowWinner(false);
       } else {
-        console.log('hi');
+        console.log('manager');
+        setShowWinner(true);
+      }
+
+      if(connectedAccount!== undefined) {
+
+        setShow(true);
+  
+      }else {
+        setShow(false);
       }
     
     })();
 
   const Button = () => (
     <>
-    <a target="_blank" href={"https://staging-global.transak.com/?apiKey=f9c0675d-eda3-47b7-8a72-f8762f9a5c03&redirectURL=https://abc.com&cryptoCurrencyCode=MATIC&defaultCryptoCurrency=MATIC&cryptoCurrencyList=MATIC&defaultNetwork=polygon&networks=polygon&network=polygon&walletAddress="+ connectedAccount + "&disableWalletAddressForm=true&exchangeScreenTitle=LotteryDapp&isFeeCalculationHidden=true&fiatAmount=100"}>Buy Matic</a>
+    <a class="buy" target="_blank" href={"https://staging-global.transak.com/?apiKey=f9c0675d-eda3-47b7-8a72-f8762f9a5c03&redirectURL=https://abc.com&cryptoCurrencyCode=MATIC&defaultCryptoCurrency=MATIC&cryptoCurrencyList=MATIC&defaultNetwork=polygon&networks=polygon&network=polygon&walletAddress="+ connectedAccount + "&disableWalletAddressForm=true&exchangeScreenTitle=LotteryDapp&isFeeCalculationHidden=true&fiatAmount=100"}>Buy Matic</a>
     </>
   )
-
   return (
+    
     <div className="App">
-      <h2>Lottery Game</h2>
-      <p>Powered By Transak</p>
-      <p>This contract is managed by {manager}</p>
-      <Button/>
-      <p>
-        There are currently {players} entries competing to win&nbsp;
-        {web3.utils.fromWei(balance, "ether")} MATIC
-      </p>
-      <p>
-        1 MATIC for 1 entry. Max 100 entries in 1 transaction.<br/>
-        Contract automatically picks a winner when we hit 200 entries.
-      </p>
-      <hr />
-      <form onSubmit={onSubmit}>
-        <h4>Try your luck</h4>
-        <div>
-          <label>Amount of MATIC to enter</label>
-          <input
-            onChange={(event) => setValue(event.target.value)}
-            value={value}
-          />
-          <button>Enter</button>
+      <h2 class="page-title">Lottery Game</h2>
+      <Button show={show} onHide={()=> setShow(false)}/>
+      <section class="section-wrapper what">
+        <div class="container">
+          <div class="text">
+            <p>Powered By Transak</p>
+            <p>This contract is managed by {manager}</p>
+            <h2>1 MATIC for 1 entry.</h2>
+            <h3>Max 100 entries in 1 transaction.</h3>
+            <p class="description">
+            There are currently {players} entries competing to win&nbsp;
+            {web3.utils.fromWei(balance, "ether")} MATIC
+          </p>
+          </div>
+          <div class="beige ball">
+            <img src={beige}/>
+          </div>
+          <div class="purple ball">
+            <img src={purple}/>
+          </div>
+          <div class="purple ball"></div>
         </div>
-      </form>
+      </section>
 
-      <hr />
-      <h1>{message}</h1>
-
-      <hr />
-      <h4>Ready to pick a winner ?</h4>
-      <button onClick={pickWinner}>Pick a winner</button>
+      <section class="section-wrapper try">
+        <div class="container">
+          <div class="left">
+            <h3>Try your luck</h3>
+          </div>
+          <div class="right">
+            <form onSubmit={onSubmit}>
+              <div>
+                <label>Amount of MATIC to enter</label>
+                <input
+                  onChange={(event) => setValue(event.target.value)}
+                  value={value}
+                />
+                <button>Enter</button>
+              </div>
+            </form>
+          </div>
+          <h1>{message}</h1>
+        </div>
+      </section>
+      <section class="winner" showWinner={false}>
+        <h4>Ready to pick a winner ?</h4>
+        <button onClick={pickWinner}>Pick a winner</button>
+      </section>
     </div>
   );
 }
