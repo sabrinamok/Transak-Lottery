@@ -24,7 +24,7 @@ function App() {
   };
 
   const initPlayers = async () => {
-    const players = await lottery.methods.getPlayers().call();
+    const players = await lottery.methods.numPlayers().call();
     setPlayers(players);
   };
 
@@ -38,14 +38,14 @@ function App() {
 
     const accounts = await web3.eth.getAccounts();
 
-    setMessage("Waiting on the transaction success...");
-
-    await lottery.methods.enter().send({
+    setMessage("Waiting for Transaction to Complete");
+    await lottery.methods.joinRaffle().send({
       from: accounts[0],
       value: web3.utils.toWei(value, "ether"),
     });
-
-    setMessage("You have been entered...");
+    initPlayers();
+    initBalance();
+    setMessage("Your Entry is Confirmed");
   };
 
   const requestAccess = async () => {
@@ -55,25 +55,30 @@ function App() {
   const pickWinner = async () => {
     const accounts = await web3.eth.getAccounts();
     setMessage("Loading");
-    await lottery.methods.pickWinner().send({
+    await lottery.methods.selectWinnerRestricted().send({
       from: accounts[0],
     });
-    setMessage("The winner have been picked.");
+    setMessage("The Winner has been selected and transferred winnings.");
   };
 
   return (
     <div className="App">
-      <h2>Lottery Contract</h2>
+      <h2>Lottery Game</h2>
+      <p>Powered By Transak</p>
       <p>This contract is managed by {manager}</p>
       <p>
-        There are currently {players.length} people entered competing to win
-        {web3.utils.fromWei(balance, "ether")}
+        There are currently {players} entries competing to win&nbsp;
+        {web3.utils.fromWei(balance, "ether")} MATIC
+      </p>
+      <p>
+        1 MATIC for 1 entry. Max 100 entries in 1 transaction.<br/>
+        Contract automatically picks a winner when we hit 200 entries.
       </p>
       <hr />
       <form onSubmit={onSubmit}>
-        <h4>Want to try your luck ?</h4>
+        <h4>Try your luck</h4>
         <div>
-          <label>Amount of ether to enter</label>
+          <label>Amount of MATIC to enter</label>
           <input
             onChange={(event) => setValue(event.target.value)}
             value={value}
