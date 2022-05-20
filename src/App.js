@@ -72,29 +72,23 @@ function App() {
       setShow(true);
     }
     });*/
+    let connectedAccount = 0;
 
-    const walletAddress = async () => {
-      await web3.eth.getAccounts();
-      console.log(walletAddress);
-    };
-
-    if(walletAddress != "0xa18736ED3c74D61777750399E716644db69F44D8") {
-      console.log('no');
-      
-    } else {
-      console.log('hi');
-    }
+    (async () => {
+      const accounts = await web3.eth.getAccounts();
+      console.log(accounts[0]);
+      connectedAccount = accounts[0];
+      if(accounts != "0xa18736ED3c74D61777750399E716644db69F44D8") {
+        console.log('hi');
+      } else {
+        console.log('hi');
+      }
+    
+    })();
 
   const Button = () => (
     <>
-    <a target="_blank" href={"https://staging-global.transak.com/?apiKey=f9c0675d-eda3-47b7-8a72-f8762f9a5c03&redirectURL=https://abc.com&cryptoCurrencyCode=MATIC&defaultCryptoCurrency=MATIC&cryptoCurrencyList=MATIC&defaultNetwork=polygon&networks=polygon&network=polygon&walletAddress="+ walletAddress + "&disableWalletAddressForm=true&exchangeScreenTitle=LotteryDapp&isFeeCalculationHidden=true&fiatAmount=100"}>Buy Matic</a>
-    </>
-  )
-
-  const Winner = () => (
-    <>
-    <h4>Ready to pick a winner ?</h4>
-      <button onClick={pickWinner}>Pick a winner</button>
+    <a target="_blank" href={"https://staging-global.transak.com/?apiKey=f9c0675d-eda3-47b7-8a72-f8762f9a5c03&redirectURL=https://abc.com&cryptoCurrencyCode=MATIC&defaultCryptoCurrency=MATIC&cryptoCurrencyList=MATIC&defaultNetwork=polygon&networks=polygon&network=polygon&walletAddress="+ connectedAccount + "&disableWalletAddressForm=true&exchangeScreenTitle=LotteryDapp&isFeeCalculationHidden=true&fiatAmount=100"}>Buy Matic</a>
     </>
   )
 
@@ -129,7 +123,8 @@ function App() {
       <h1>{message}</h1>
 
       <hr />
-      <Winner/>
+      <h4>Ready to pick a winner ?</h4>
+      <button onClick={pickWinner}>Pick a winner</button>
     </div>
   );
 }
